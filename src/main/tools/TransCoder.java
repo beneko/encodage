@@ -1,9 +1,8 @@
-package tools;
+package main.java.tools;
 
 import org.apache.commons.lang3.StringUtils;
 import org.germain.tool.ManaBox;
 
-import java.util.Arrays;
 import java.util.HashMap;
 
 public class TransCoder {
@@ -16,26 +15,20 @@ public class TransCoder {
     public TransCoder(String str) {
 
         String keys = ManaBox.decrypt(str);
-        StringBuilder values = new StringBuilder();
         char chr1 = 'A';
         char chr2 = 'A';
 
-        for (int i=0; i<keys.length();i++){
-
-                values.append(chr1);
-                values.append(chr2);
-                chr2++;
-                if(chr2 > 'Z'){
-                    chr1++;
-                    chr2 ='A';
-                }
-        }
-
         for (int i=0; i<keys.length();i++) {
 
-            encode.put(keys.charAt(i),values.substring((i*2),(i*2)+2));
-            decode.put(values.substring((i*2),(i*2)+2),keys.charAt(i));
+            encode.put(keys.charAt(i),""+chr1+chr2);
+            decode.put(""+chr1+chr2,keys.charAt(i));
 
+             if(chr2 != 'Z'){
+                 chr2++;
+             }else {
+                 chr1++;
+                 chr2='A';
+             }
         }
     }
 

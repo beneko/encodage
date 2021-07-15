@@ -1,62 +1,78 @@
 package tools;
 
+import org.apache.commons.lang3.StringUtils;
+import org.germain.tool.ManaBox;
+
+import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
 
 public class TransCoder {
 
-    private HashMap<Character, String> encode = new HashMap<>();
-    private HashMap<String , Character> decode= new HashMap<>();
 
-    public TransCoder(String val) {
-
-        String key = "CFfrkowl.aDzyS:eHjsGPZgMApWvRYVmtnK!BuU IQiEXTxbqhLdNJO,'c";
-        char[] keyArray = new char[key.length()];
-        String value = val;
-        String[] valueArray = new String[val.length()];
+    private HashMap <Character, String> encode = new HashMap<>();
+    private HashMap <String , Character> decode= new HashMap<>();
 
 
-        for (int i=0; i<key.length();i++) {
-            keyArray[i]=key.charAt(i);
+    public TransCoder(String str) {
+
+        String keys = ManaBox.decrypt(str);
+        StringBuilder values = new StringBuilder();
+        char chr1 = 'A';
+        char chr2 = 'A';
+
+        for (int i=0; i<keys.length();i++){
+
+                values.append(chr1);
+                values.append(chr2);
+                chr2++;
+                if(chr2 > 'Z'){
+                    chr1++;
+                    chr2 ='A';
+                }
         }
-        for (int j=0; j<value.length(); j=j+2) {
-            valueArray[j]=value.substring(j);
-        }
-        for (int k=0; k<key.length();k++){
-            this.encode.put(keyArray[k],valueArray[k]);
-            this.decode.put(valueArray[k], keyArray[k]);
-        }
 
+        for (int i=0; i<keys.length();i++) {
+
+            encode.put(keys.charAt(i),values.substring((i*2),(i*2)+2));
+            decode.put(values.substring((i*2),(i*2)+2),keys.charAt(i));
+
+        }
     }
 
-
-    public Map<Character, String> getEncode() {
-        
+    public HashMap<Character, String> getEncode() {
         return encode;
     }
 
-
-    public Map<String, Character> getDecode() {
-        
+    public HashMap<String, Character> getDecode() {
         return decode;
     }
 
-    public String encode(String msg){
+    public StringBuilder encode(String str){
+        
+            StringBuilder crypt =  new StringBuilder();
+            str = StringUtils.stripAccents(str);// replace characters with accent
+                
+            for(int i=0;i<str.length(); i++){
 
-        String msgCode = "";
+                crypt.append(encode.get(str.charAt(i)));
 
-        for (int i=0 ; i<msg.length(); i++) {
-            for (char key: encode.keySet()) {
-                if (msg.charAt(i) == key){
-                    msgCode +=encode.get(i);
-                }
             }
-        }
-    return msgCode;
+        return crypt;
     }
 
-    public String decode(String msg){
+    public StringBuilder decode(String str){
 
+        String[] subStr = new String[str.length()/2];
+        StringBuilder decrypt =  new StringBuilder();
+
+        for(int i=0;i< subStr.length; i++){
+            subStr[i] = str.substring(i*2, (i*2)+2);
+        }
+
+        for (String s : subStr) {
+            decrypt.append(decode.get(s));
+        }
+        return decrypt;
     }
 
 }

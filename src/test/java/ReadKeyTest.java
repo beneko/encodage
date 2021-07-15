@@ -32,7 +32,7 @@ public class ReadKeyTest {
 
     @Test
     public void createMapTest() {
-        String testGermain = "6lUjKOzUj4e/Gelw9c6sDLqHniwulClN6XSayZ+HRF/kbZx+CMf95jxrhm4YFSY26OnxVlsrzGkO00IMeAFs3g==";
+       String testGermain = "6Qe0IsEEH1utWRe7UKzGMiDTytOB3HS1dEfIB4imna3IRHXHRn5ZrvKFEcPjmPgKYGuytG+gDAl1m2DdHalJQg==";
         TransCoder transcodeTest = new TransCoder(testGermain);
         Assert.assertNotNull(transcodeTest.getEncode());
         System.out.println(transcodeTest.getEncode().toString());

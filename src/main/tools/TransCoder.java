@@ -1,15 +1,17 @@
-package main.java.tools;
+package main.tools;
 
 import org.apache.commons.lang3.StringUtils;
 import org.germain.tool.ManaBox;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class TransCoder {
 
 
-    private HashMap <Character, String> encode = new HashMap<>();
-    private HashMap <String , Character> decode= new HashMap<>();
+    private final HashMap <Character, String> encode = new HashMap<>();
+    private final HashMap <String , Character> decode= new HashMap<>();
 
 
     public TransCoder(String str) {
@@ -40,30 +42,31 @@ public class TransCoder {
         return decode;
     }
 
-    public StringBuilder encode(String str){
-        
-            StringBuilder crypt =  new StringBuilder();
+    public String encode(String str){
+
+            String crypt = "";
             str = StringUtils.stripAccents(str);// replace characters with accent
                 
             for(int i=0;i<str.length(); i++){
 
-                crypt.append(encode.get(str.charAt(i)));
+                crypt= crypt + encode.get(str.charAt(i));
 
             }
         return crypt;
     }
 
-    public StringBuilder decode(String str){
+    public String decode(String str){
 
+        String decrypt= "";
         String[] subStr = new String[str.length()/2];
-        StringBuilder decrypt =  new StringBuilder();
+
 
         for(int i=0;i< subStr.length; i++){
             subStr[i] = str.substring(i*2, (i*2)+2);
         }
 
         for (String s : subStr) {
-            decrypt.append(decode.get(s));
+            decrypt = decrypt + decode.get(s);
         }
         return decrypt;
     }

@@ -1,7 +1,7 @@
-package main.java;
+package main;
 
-import main.java.gui.Menu;
-import main.java.tools.TransCoder;
+import main.gui.Menu;
+import main.tools.TransCoder;
 
 
 public class Main {
@@ -11,7 +11,7 @@ public class Main {
 
 //        String testGermain = "6Qe0IsEEH1utWRe7UKzGMiDTytOB3HS1dEfIB4imna3IRHXHRn5ZrvKFEcPjmPgKYGuytG+gDAl1m2DdHalJQg==";
 //        TransCoder transcodeTest = new TransCoder(testGermain);
-//        StringBuilder str =transcodeTest.decode("BYAPASBNBGAPASBGASBNASAFBHBGBNAHAJBNAZAFBLADBNAPASASAJAMAPADBNBJBJBJ");
+//        String str =transcodeTest.decode("BYAPASBNBGAPASBGASBNASAFBHBGBNAHAJBNAZAFBLADBNAPASASAJAMAPADBNBJBJBJ");
 //        System.out.println(str);
 
     }

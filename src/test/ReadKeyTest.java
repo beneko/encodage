@@ -1,13 +1,10 @@
-package test.java;
+package test;
 
 import org.apache.commons.lang3.StringUtils;
 import org.germain.tool.ManaBox;
 import org.junit.Assert;
 import org.junit.Test;
-import tools.TransCoder;
-
-import java.util.HashMap;
-import java.util.Map;
+import main.tools.TransCoder;
 
 public class ReadKeyTest {
 

@@ -4,11 +4,11 @@ import main.model.Message;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
+
+    private static boolean again;
 
     public static void start() {
         String home = System.getProperty("user.dir");
@@ -46,6 +46,7 @@ public class Menu {
                     msgClearPath = Paths.get(home, encoded + "Decoded.txt");
                     Message message = new Message(true, keyPath, msgClearPath, msgEncodedPath);
                     message.readNwrite();
+
                 }
                 case 2 -> {
 
@@ -58,9 +59,26 @@ public class Menu {
                     Message message = new Message(false, keyPath, msgClearPath, msgEncodedPath);
                     message.readNwrite();
                 }
+                case 3 ->{
+                    again = false;
+                }
                 default -> System.out.println("entrez invalide !!!");
             }
-        } while (n != 3);
+
+            System.out.println("Voulez vous continuer? y/n");
+            char reponse = scanner.next().charAt(0);
+            switch (reponse){
+                case 'y' -> again = true;
+                case 'n' -> again = false;
+                default -> System.out.println("votre choix n'est pas reconnu, ce sera non !!!");
+            }
+
+        } while (again);
+
+        System.out.println("==================================================");
+        System.out.println("|                   Goodbye!                     |");
+        System.out.println("==================================================");
+
     }
 }
 

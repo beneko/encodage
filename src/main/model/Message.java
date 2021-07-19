@@ -5,10 +5,10 @@ import main.tools.TransCoder;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Message {
 
@@ -32,59 +32,102 @@ public class Message {
 
     public void readNwrite() {
 
-
-        try {
-            key = Files.readString(keyPath); // lire la clé
-            transCoder = new TransCoder(key);
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("la clé n'est pas trouvé !");
-        }
-
-        if (encoded) {
+        //on peut tester si la clé existe
+        if (Files.exists(keyPath))
+        {
             try {
-                msgEncoded = Files.readAllLines(msgEncodedPath); //lire le fichier à encoder
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            for (String s:
-                 msgEncoded) {//lisons les lignes
-                 msgClear.add(transCoder.decode(s));
-            }
-            for (String s : msgClear) { //écrivons les lignes dans le fichier
-                try {
-                    Files.writeString(msgClearPath,s + System.lineSeparator(),StandardOpenOption.CREATE, StandardOpenOption.APPEND);
-                } catch (IOException e) {
-                    System.out.println(e.getMessage());
+                key = Files.readString(keyPath); // lire la clé
+                if (key != null) {
+                    transCoder = new TransCoder(key);
+                }else {
+                    System.out.println("le fichier contenant la clé est vide !");
                 }
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+                System.out.println("la clé n'est pas lisible !");
             }
-
-            System.out.println("le messsage a été bien décoder");
-            System.out.println("Le message décodé se trouve: ");
-            System.out.println(msgClearPath);
         }
         else
         {
-            try {
-                msgClear = Files.readAllLines(msgClearPath); //lire le fichier à décoder
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            for (String s:
-                    msgClear) {//lisons les lignes
-                msgEncoded.add(transCoder.encode(s));
-            }
-            for (String s : msgEncoded) { //écrivons les lignes dans le fichier
+            System.out.println("la clé n'existe pas");
+            try (Scanner sc = new Scanner(System.in)) {
+                System.out.println("Entrez la nouvelle clé: ");
+                key = sc.next();
+                transCoder = new TransCoder(key);
                 try {
-                    Files.writeString(msgEncodedPath,s + System.lineSeparator(),StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+                    Files.writeString(keyPath,key + System.lineSeparator(),StandardOpenOption.CREATE, StandardOpenOption.APPEND);
                 } catch (IOException e) {
                     System.out.println(e.getMessage());
                 }
             }
+        }
 
-            System.out.println("le messsage a été bien encoder");
-            System.out.println("Le message encodé se trouve: ");
-            System.out.println(msgEncodedPath);
+
+        if (encoded)
+        {
+
+            if (Files.exists(msgEncodedPath))
+            {
+
+                try {
+                    msgEncoded = Files.readAllLines(msgEncodedPath); //lire le fichier à décoder
+                } catch (IOException e) {
+                    System.out.println(e.getMessage());
+                }
+                for (String s: msgEncoded) {//lisons les lignes
+                        msgClear.add(transCoder.decode(s));
+                }
+                for (String s : msgClear) { //écrivons les lignes dans le fichier
+                    try {
+                        Files.writeString(msgClearPath,s + System.lineSeparator(),StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+                    } catch (IOException e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
+
+                System.out.println("le messsage a été bien décoder");
+                System.out.println("Le message décodé se trouve: ");
+                System.out.println(msgClearPath);
+
+            }
+            else
+            {
+                System.out.println("le fichier à décoder n'existe pas");
+            }
+
+        }
+        else
+        {
+            //on peut tester si le fichier à encoder existe
+            if (Files.exists(msgClearPath))
+            {
+
+                try {
+                    msgClear = Files.readAllLines(msgClearPath); //lire le fichier à encoder
+                } catch (IOException e) {
+                    System.out.println(e.getMessage());
+                }
+                for (String s:
+                        msgClear) {//lisons les lignes
+                    msgEncoded.add(transCoder.encode(s));
+                }
+                for (String s : msgEncoded) { //écrivons les lignes dans le fichier
+                    try {
+                        Files.writeString(msgEncodedPath,s + System.lineSeparator(),StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+                    } catch (IOException e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
+
+                System.out.println("le messsage a été bien encoder");
+                System.out.println("Le message encodé se trouve: ");
+                System.out.println(msgEncodedPath);
+
+            }
+            else
+            {
+                System.out.println("le fichier à encoder n'existe pas");
+            }
         }
     }
 }

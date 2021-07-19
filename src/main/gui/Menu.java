@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class Menu {
 
-    private static boolean again;
+    private static boolean again = false;
 
     public static void start() {
         String home = System.getProperty("user.dir");
@@ -60,17 +60,18 @@ public class Menu {
                     message.readNwrite();
                 }
                 case 3 ->{
-                    again = false;
                 }
+
                 default -> System.out.println("entrez invalide !!!");
             }
-
-            System.out.println("Voulez vous continuer? y/n");
-            char reponse = scanner.next().charAt(0);
-            switch (reponse){
-                case 'y' -> again = true;
-                case 'n' -> again = false;
-                default -> System.out.println("votre choix n'est pas reconnu, ce sera non !!!");
+            if(n!=3){
+                System.out.println("Voulez vous continuer? y/n");
+                char reponse = scanner.next().charAt(0);
+                switch (reponse){
+                    case 'y' -> again = true;
+                    case 'n' -> again = false;
+                    default -> System.out.println("votre choix n'est pas reconnu, ce sera non !!!");
+                }
             }
 
         } while (again);

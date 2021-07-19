@@ -13,8 +13,8 @@ import java.util.Scanner;
 public class Message {
 
     private boolean encoded;
-    List<String> msgClear = new ArrayList<>();
-    List<String> msgEncoded = new ArrayList<>();
+    private List<String> msgClear = new ArrayList<>();
+    private List<String> msgEncoded = new ArrayList<>();
     private Path msgEncodedPath;
     private Path msgClearPath;
     private Path keyPath;

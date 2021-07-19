@@ -2,10 +2,7 @@ package main.tools;
 
 import org.apache.commons.lang3.StringUtils;
 import org.germain.tool.ManaBox;
-
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class TransCoder {
 

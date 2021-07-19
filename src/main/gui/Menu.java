@@ -12,7 +12,7 @@ public class Menu {
 
     public static void start() {
         String home = System.getProperty("user.dir");
-        System.out.println(home);
+//        System.out.println(home);
 
         String header =
                 "╔══════════════════════════════════════╗\n" +
@@ -60,6 +60,7 @@ public class Menu {
                     message.readNwrite();
                 }
                 case 3 ->{
+
                 }
 
                 default -> System.out.println("entrez invalide !!!");

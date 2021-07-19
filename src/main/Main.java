@@ -1,8 +1,6 @@
 package main;
 
 import main.gui.Menu;
-import main.tools.TransCoder;
-
 
 public class Main {
 
